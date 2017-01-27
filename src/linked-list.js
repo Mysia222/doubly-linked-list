@@ -5,16 +5,24 @@ class LinkedList {
     this.length = 0;  
     this._head = new Node();
     this._tail = this._head;
+    this.append = function(data) {
+      const newTail = new Node(data, this._tail, null);
+      this._tail.next = newTail;
+      this._tail = newTail;
+      if (!this.length) {
+        this._head = newTail;
+      }
+      ++this.length;
+      return this;
     }
-
-    append(data) {
-
-    }
-
-    head() {}
-
-
-    tail() {}
+    
+    this.head = function() {
+      return this._head.data;
+    };
+    
+    this.tail = function() {
+      return this._tail.data;
+    };
 
     at(index) {}
 
