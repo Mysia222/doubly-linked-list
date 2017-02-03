@@ -48,11 +48,30 @@ class LinkedList {
     };
     
     this.clear = function() {
-      
+      const length = this.length
+      for (let i = 0; i < length; ++i) {
+        this.deleteAt(0);
+      }
+      this._head = new Node();
+      this._tail = this._head;
+      return this;
     };
     
     this.deleteAt = function(index) {
-    
+     let found = getNodeAt.call(this, index);
+      if (found === undefined) {
+        return this;
+      }
+      if (found.prev !== null) {
+        // No matter do we have next or not
+        // because if not we should set next to undefined
+        found.prev.next = found.next;
+      }
+      if (found.next !== null) {
+        found.next.prev = found.prev;
+      }
+      --this.length;
+      return this;
     };
     
     this.reverse = function() {
