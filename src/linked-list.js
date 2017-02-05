@@ -6,6 +6,7 @@ class LinkedList {
     this.length = 0;  
     this._head = new Node();
     this._tail = this._head;
+    
     this.append = function(data) {
       const newTail = new Node(data, this._tail, null);
       this._tail.next = newTail;
@@ -58,13 +59,11 @@ class LinkedList {
     };
     
     this.deleteAt = function(index) {
-     let found = getNodeAt.call(this, index);
+      let found = getNodeAt.call(this, index);
       if (found === undefined) {
         return this;
       }
       if (found.prev !== null) {
-        // No matter do we have next or not
-        // because if not we should set next to undefined
         found.prev.next = found.next;
       }
       if (found.next !== null) {
@@ -75,7 +74,19 @@ class LinkedList {
     };
     
     this.reverse = function() {
+      if (this.isEmpty()) {
+        return;
+      }
+      let next = this._head;
+      let prev = this._tail;
       
+      const iterations = Math.floor(this.length / 2);
+      for (let i = 0; i < iterations; ++i) {
+        [next.data, prev.data] = [prev.data, next.data];
+        next = next.next;
+        prev = prev.prev;
+      }
+      return this;
     };
     
     this.indexOf = function(data) {
@@ -103,3 +114,4 @@ class LinkedList {
 }
 
 module.exports = LinkedList;
+
